@@ -6,6 +6,7 @@ interface ButtonProps {
   color?: "primary" | "secondary" | "danger";
   children: React.ReactNode;
   className?: string;
+  disabled?: boolean; //for button disabled
 }
 
 export const Button = ({
@@ -13,6 +14,7 @@ export const Button = ({
   children,
   className,
   onClick,
+  disabled = false,
 }: ButtonProps) => {
   return (
     <button
@@ -26,6 +28,7 @@ export const Button = ({
         className
       )}
       onClick={onClick}
+      disabled={disabled} //property, aminek disabled a value-ja, ami meg false.
     >
       {children}
     </button>
