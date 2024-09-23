@@ -5,10 +5,17 @@ import { Button } from "./components/button/Button";
 
 function App() {
   const [count, setCount] = useState(0);
-
+  const [error, setError] = useState(""); 
   const updateCounter = (increase: boolean) => {
     setCount((currentValue) => {
-      return increase ? currentValue + 1 : currentValue - 1;
+      if (count === 1 && !increase){//(count > 0 && increase){
+        setError("cannot go below zero. nice try tho.");
+      } 
+      else{ 
+        setError("");
+      }
+      return currentValue;
+      //return increase ? currentValue + 1 : currentValue - 1;
     });
   };
 
@@ -24,7 +31,7 @@ function App() {
             <Button color="primary" onClick={() => updateCounter(true)}>
               Increase +
             </Button>
-            <Button color="secondary" onClick={() => updateCounter(false)}>
+            <Button color="secondary" disabled={count === 0} onClick={() => updateCounter(false)}>
               Decrease -
             </Button>
             <Button color="danger" onClick={() => setCount(0)}>

@@ -6,6 +6,7 @@ interface ButtonProps {
   color?: "primary" | "secondary" | "danger";
   children: React.ReactNode;
   className?: string;
+  disabled?: boolean;
 }
 
 export const Button = ({
@@ -13,6 +14,7 @@ export const Button = ({
   children,
   className,
   onClick,
+  disabled = false //set it to false as default, change value, if condition applies to that particular btn.
 }: ButtonProps) => {
   return (
     <button
@@ -26,6 +28,7 @@ export const Button = ({
         className
       )}
       onClick={onClick}
+      disabled={disabled} //here value is set to default, which is false.
     >
       {children}
     </button>
