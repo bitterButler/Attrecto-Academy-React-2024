@@ -8,6 +8,7 @@ import { Page } from "../../components/page/Page";
 import { UserFormValues, UserModel } from "../../models/user.model";
 import { BadgeModel } from "../../models/badges.model";
 import TextField from "../../components/text-field/TextField";
+import { ProfileImagePreview } from "../../components/page/ProfileImagePreview";
 import TagField from "../../components/tag-field/TagField";
 import { badgesService } from "../../services/badges.service";
 import { userService } from "../../services/user.service";
@@ -42,7 +43,8 @@ export const UserPage = () => {
     },
     resolver: yupResolver(schema),
   });
-
+  
+  const ImageURL = watch("image");
   useEffect(() => {
     const fetchUser = async (id: string | number) => {
       const response = await userService.geUser(id);
@@ -97,6 +99,9 @@ export const UserPage = () => {
           register={register}
           error={errors.image?.message}
         />
+        <ProfileImagePreview
+          imageURL={ImageURL}
+        />  
         <Controller
           name="badges"
           control={control}
