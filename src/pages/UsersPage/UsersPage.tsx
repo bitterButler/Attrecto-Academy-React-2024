@@ -7,7 +7,7 @@ import { Button } from "../../components/button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faL, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import classes from "./UsersPage.module.scss";
 import UserCard from "../../components/user-card/UserCard";
@@ -17,11 +17,18 @@ import { badgesService } from "../../services/badges.service";
 const UsersPage = () => {
   const [users, setUsers] = useState<UserModel[]>([]);
   const [badges, setBadges] = useState<BadgeModel[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
   const fetchUsers = useCallback(async () => {
-    setUsers(await userService.getUsers());
+    try {
+      setUsers(await userService.getUsers());
+      setLoading(true);
+    }
+    finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -30,7 +37,13 @@ const UsersPage = () => {
 
   useEffect(() => {
     const fetchBadges = async () => {
-      setBadges(await badgesService.getBadges());
+      try {
+        setBadges(await badgesService.getBadges());
+        setLoading(true);
+      }
+      finally {
+        setLoading(false);
+      }
     };
     fetchBadges();
   }, []);
@@ -46,7 +59,7 @@ const UsersPage = () => {
   };
 
   return (
-    <Page title="Users">
+    <Page title="Users" isLoading={loading}>
       <div className="row">
         <div className="col-12 col-sm-6 col-md-4 col-lg-3">
           <Button color="primary" className="w-100 mb-3" onClick={goToUserPage}>
